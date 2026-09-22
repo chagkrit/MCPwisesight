@@ -2,16 +2,18 @@
   "name": "zocialeye-brandscan-mcp",
   "version": "0.1.0",
   "private": true,
-  "description": "Local, read-only Zocial Eye Brand Scan collector for Codex via MCP.",
+  "description": "Local Zocial Eye Brand Scan collector for stdio MCP clients.",
   "type": "module",
   "engines": {
-    "node": ">=22"
+    "node": ">=18"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "check": "tsc --noEmit -p tsconfig.json",
     "test": "node --import tsx --test test/*.test.ts",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "mcpb:validate": "mcpb validate manifest.json",
+    "mcpb:pack": "npm run build && node scripts/build-mcpb.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
@@ -19,6 +21,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@anthropic-ai/mcpb": "^2.1.2",
     "@types/node": "^22.14.0",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"

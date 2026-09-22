@@ -5,6 +5,22 @@ already see in Zocial Eye Brand Scan. It drives an isolated, persistent Google
 Chrome profile through the visible Brand Scan interface; it does not call
 undocumented site APIs or store credentials, cookies, tokens, or session URLs.
 
+## Claude Desktop extension (one-file install)
+
+Download [`zocialeye-brandscan-claude-desktop-0.1.0.mcpb`](releases/zocialeye-brandscan-claude-desktop-0.1.0.mcpb), then in Claude Desktop choose **Settings → Extensions → Advanced settings → Install Extension** and select that file. The installer asks you to choose one allowed CSV output folder; the extension cannot write anywhere else.
+
+After installation, call `zocialeye_auth_status`. It opens an isolated, visible
+Google Chrome profile at `~/.zocialeye-brandscan-claude`; complete the Zocial
+Eye login yourself if needed. This extension neither packages nor transmits
+passwords, cookies, tokens, or an existing browser profile. It requires Google
+Chrome to be installed locally and uses no undocumented Zocial Eye API.
+
+The committed SHA-256 in [`releases/SHA256SUMS.txt`](releases/SHA256SUMS.txt)
+lets you verify the downloaded bundle (from `releases/`, run
+`shasum -a 256 -c SHA256SUMS.txt`). The MCPB format is supported by Claude
+Desktop; other clients may still use this same MCP through ordinary local
+`stdio` configuration.
+
 ## Tools
 
 - `zocialeye_auth_status` opens/checks the dedicated Chrome profile and reports
@@ -50,7 +66,13 @@ npm run check
 npm test
 npm run build
 npm start
+npm run mcpb:validate
+npm run mcpb:pack
 ```
+
+`npm run mcpb:pack` builds a clean production-dependency bundle in `releases/`.
+It intentionally skips Playwright browser downloads because the server drives
+the user's installed Chrome channel.
 
 The server is intended to be registered as a local MCP command and not exposed
 over HTTP.

@@ -1,0 +1,77 @@
+{
+  "$schema": "https://raw.githubusercontent.com/modelcontextprotocol/mcpb/main/schemas/mcpb-manifest-v0.3.schema.json",
+  "manifest_version": "0.3",
+  "name": "zocialeye-brandscan",
+  "display_name": "Zocial Eye Brand Scan",
+  "version": "0.1.0",
+  "description": "Collect Zocial Eye Brand Scan Social Metric data through an authenticated local Chrome profile.",
+  "long_description": "A local-only MCP server for Zocial Eye Brand Scan. It uses a dedicated visible Chrome profile, requires you to sign in yourself, never accepts credentials, and limits CSV writes to the folder selected at installation. Social Metric remains third-party listening and benchmark data, not native social analytics.",
+  "author": {
+    "name": "Chagkrit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chagkrit/MCPwisesight.git"
+  },
+  "homepage": "https://github.com/chagkrit/MCPwisesight",
+  "documentation": "https://github.com/chagkrit/MCPwisesight#readme",
+  "support": "https://github.com/chagkrit/MCPwisesight/issues",
+  "privacy_policies": [
+    "https://wisesight.com/th/privacy-policy/"
+  ],
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/dist/index.js"
+      ],
+      "env": {
+        "ZOCIALEYE_ALLOWED_OUTPUT_ROOTS": "${user_config.allowed_output_root}",
+        "ZOCIALEYE_APP_DATA_DIR": "${HOME}/.zocialeye-brandscan-claude",
+        "ZOCIALEYE_HEADLESS": "false",
+        "ZOCIALEYE_STAGE_TTL_MINUTES": "30"
+      }
+    }
+  },
+  "user_config": {
+    "allowed_output_root": {
+      "type": "directory",
+      "title": "Allowed CSV output folder",
+      "description": "Choose the only folder where this extension may create or update CSV files.",
+      "required": true,
+      "multiple": false
+    }
+  },
+  "tools": [
+    {
+      "name": "zocialeye_auth_status",
+      "description": "Open/check the dedicated Chrome profile and report whether Brand Scan is ready for a manual login."
+    },
+    {
+      "name": "zocialeye_collect_preview",
+      "description": "Collect one brand/month/platform selection through Brand Scan and return a non-mutating CSV plan."
+    },
+    {
+      "name": "zocialeye_commit_csv",
+      "description": "Atomically write only a previously staged preview after target hashes are rechecked."
+    }
+  ],
+  "keywords": [
+    "zocial eye",
+    "wisesight",
+    "brand scan",
+    "social metric",
+    "thai social analytics"
+  ],
+  "compatibility": {
+    "platforms": [
+      "darwin",
+      "win32"
+    ],
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  }
+}
